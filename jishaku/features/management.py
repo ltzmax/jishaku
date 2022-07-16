@@ -20,7 +20,7 @@ import typing
 from urllib.parse import urlencode
 
 import discord
-from discord.ext import commands
+from redbot.core import commands
 
 from jishaku.features.baseclass import Feature
 from jishaku.flags import Flags

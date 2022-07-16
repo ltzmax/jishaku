@@ -16,7 +16,7 @@ import sys
 import typing
 
 import discord
-from discord.ext import commands
+from redbot.core import commands
 
 from jishaku.features.baseclass import Feature
 from jishaku.flags import Flags
@@ -174,7 +174,11 @@ class RootCommand(Feature):
         # Show websocket latency in milliseconds
         summary.append(f"Average websocket latency: {round(self.bot.latency * 1000, 2)}ms")
 
-        await ctx.send("\n".join(summary))
+        embed = discord.Embed(
+            description='\n'.join(summary),
+            color=0x00ff00,
+        )
+        await ctx.send(embed=embed)
 
     # pylint: disable=no-member
     @Feature.Command(parent="jsk", name="hide")

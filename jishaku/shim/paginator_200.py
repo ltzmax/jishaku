@@ -16,7 +16,7 @@ import typing
 
 import discord
 from discord import ui
-from discord.ext import commands
+from redbot.core import commands
 
 from jishaku.shim.paginator_base import EMOJI_DEFAULT
 

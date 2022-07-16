@@ -17,7 +17,7 @@ import typing
 import discord
 import pkg_resources
 from braceexpand import braceexpand
-from discord.ext import commands
+from redbot.core import commands
 
 from jishaku.types import BotT, ContextA
 

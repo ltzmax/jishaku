@@ -19,7 +19,7 @@ import typing
 from datetime import datetime, timezone
 
 import discord
-from discord.ext import commands
+from redbot.core import commands
 
 from jishaku.types import BotT, ContextA
 
