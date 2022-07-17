@@ -85,8 +85,8 @@ class RootCommand(Feature):
         summary = [
             f"Jishaku v{package_version('jishaku')} (Ported for Red-DiscordBot), {dist_version}, "
             f"`Python {sys.version}` on `{sys.platform}`".replace("\n", ""),
-            f"Module was loaded <t:{self.load_time.timestamp():.0f}:R>, "
-            f"cog was loaded <t:{self.start_time.timestamp():.0f}:R>.",
+            f"Module was loaded <t:{self.load_time.timestamp():.0f}:R> (<t:{self.load_time.timestamp():.0f}:F>), "
+            f"cog was loaded <t:{self.start_time.timestamp():.0f}:R> (<t:{self.start_time.timestamp():.0f}:F>).",
             ""
         ]
 
