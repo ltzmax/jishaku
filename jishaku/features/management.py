@@ -60,7 +60,11 @@ class ManagementFeature(Feature):
             try:
                 await discord.utils.maybe_coroutine(method, extension)
             except Exception as exc:  # pylint: disable=broad-except
-                traceback_data = ''.join(traceback.format_exception(type(exc), exc, exc.__traceback__, 1))
+                if isinstance(exc, commands.ExtensionFailed) and exc.__cause__:
+                    cause = exc.__cause__
+                    traceback_data = ''.join(traceback.format_exception(type(cause), cause, cause.__traceback__, 8))
+                else:
+                    traceback_data = ''.join(traceback.format_exception(type(exc), exc, exc.__traceback__, 2))
 
                 paginator.add_line(
                     f"{icon}\N{WARNING SIGN} `{extension}`\n```py\n{traceback_data}\n```",
@@ -89,7 +93,7 @@ class ManagementFeature(Feature):
             try:
                 await discord.utils.maybe_coroutine(self.bot.unload_extension, extension)
             except Exception as exc:  # pylint: disable=broad-except
-                traceback_data = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__, 1))
+                traceback_data = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__, 2))
 
                 paginator.add_line(
                     f"{icon}\N{WARNING SIGN} `{extension}`\n```py\n{traceback_data}\n```",
@@ -235,7 +239,11 @@ class ManagementFeature(Feature):
             slash_commands = self.bot.tree._get_all_commands(  # type: ignore  # pylint: disable=protected-access
                 guild=discord.Object(guild) if guild else None
             )
-            payload = [command.to_dict() for command in slash_commands]
+            translator = getattr(self.bot.tree, 'translator', None)
+            if translator:
+                payload = [await command.get_translated_payload(translator) for command in slash_commands]
+            else:
+                payload = [command.to_dict() for command in slash_commands]
 
             try:
                 if guild is None:
